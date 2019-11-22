@@ -22,12 +22,9 @@ bool reportOpenFile(){
     }
 }
 
-int counter = 0;
+
 
 bool reportReport(){
-    /*while(){
-        counter++;
-    }*/
 
 }
 
