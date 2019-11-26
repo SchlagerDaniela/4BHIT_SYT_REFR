@@ -12,7 +12,7 @@ int main() {
 
     if(reportOpenFile() == true){;
         reportReport();
-
+        reportCloseFile();
     }else{
         reportCloseFile();
     }
