@@ -3,7 +3,11 @@
 #include <fstream>
 #include <iostream>
 #include <regex>
-
+/*
+ * Author: Schlager Daniela
+ * Date: 22.11.2019
+ * Class: 4BHIT
+ */
 
 std::ifstream myfile;
 std::regex browser(".*\"(\\w+)/.*");
@@ -119,9 +123,9 @@ bool reportReport(){
 
     }
 
-    std::cout << "Lines: " << lines << "\n";
+    std::cout << "Die Anzahl der Zeilen ist  " << lines << "\n";
 
-    std::cout << "\nBrowser: \n";
+    std::cout << "\nFolgende Browser wurden gefunden: \n";
     std::map<std::string, int>::iterator it = mapOfBrowser.begin();
     while(it != mapOfBrowser.end())
     {
@@ -129,7 +133,7 @@ bool reportReport(){
         it++;
     }
 
-    std::cout << "\nHTTP Method: \n";
+    std::cout << "\nVerwendete HTTP Methoden: \n";
     it = mapOfMethod.begin();
     while(it != mapOfMethod.end())
     {
@@ -137,7 +141,7 @@ bool reportReport(){
         it++;
     }
 
-    std::cout << "\nOS: \n";
+    std::cout << "\nFolgende Betriebssysteme wurden gefunden: \n";
     it = mapOfOS.begin();
     while(it != mapOfOS.end())
     {

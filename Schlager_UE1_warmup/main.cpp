@@ -1,7 +1,11 @@
 #include <iostream>
 #include <cstring>
 #include "report.h"
-
+/*
+ * Author: Schlager Daniela
+ * Date: 22.11.2019
+ * Class: 4BHIT
+ */
 int main(int argc, const char* argv[])
 {
     char* source;
@@ -21,5 +25,4 @@ int main(int argc, const char* argv[])
         std::cout << "Please specify the relative path to the file! <command> -f <file>";
         exit(EXIT_FAILURE);
     }
-
 }
