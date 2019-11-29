@@ -10,7 +10,7 @@
 #include <stdbool.h>
 
 
-bool reportOpenFile();
+bool reportOpenFile(char *source);
 bool reportReport();
 bool reportCloseFile();
 

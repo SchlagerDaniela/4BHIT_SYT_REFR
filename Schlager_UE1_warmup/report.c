@@ -6,43 +6,40 @@
 
 #include "report.h"
 
-static FILE *fp;
-char *source = "F:\\01_Schule\\4BHIT\\SYT\\REFR\\workspace\\Schlager_UE1_warmup\\access.log.6";
+FILE *fp;
 
+int counter = 1;
+char c;
 
-bool reportOpenFile() {
-    if (source == NULL) {
-        printf("Funktioniert nicht \n");
-        return false;
-    }
+bool reportOpenFile(char* source) {
 
     fp = fopen(source, "r");
     if (fp == NULL) {
-        printf("Funktioniert \n");
+        printf("File konnte nicht geoeffnet werden \n");
+        return false;
+    }
+    if(fp != NULL){
+        printf("File konnte geoeffnet werden.\n");
         return true;
     }
 }
 
-
-int counter;
-char c;
-
 bool reportReport() {
-    fp = fopen(source, "r");
 
-    for(c = getc(fp); c!=EOF; c=getc(fp)){
-        if(c=='\n'){
-            counter = counter +1;
+    while((c = fgetc(fp)) != EOF){
+        if(c == '\n'){
+            counter++;
         }
     }
-    printf("Zeilen: %d" , counter);
+
+    return true;
 }
 
 bool reportCloseFile() {
     if (fp != NULL) {
         fclose(fp);
-        printf("Close");
+        printf("File wurde geschlossen. \n");
     }
+    printf("Zeilen: %d",counter);
     return true;
 }
-

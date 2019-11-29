@@ -6,16 +6,13 @@
 
 #include "report.h"
 
+char source[] = "..//access.log.6";
 
 int main() {
 
-
-    if(reportOpenFile() == true){;
-        reportReport();
-        reportCloseFile();
-    }else{
-        reportCloseFile();
-    }
+    reportOpenFile(source);
+    reportReport();
+    reportCloseFile();
 
     return 0;
 }
