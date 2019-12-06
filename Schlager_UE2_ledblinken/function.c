@@ -1,4 +1,4 @@
-#include "function.h"
+/*#include "function.h"
 
 static int GPIOExport(int pin)
 {
@@ -106,4 +106,4 @@ static int GPIOWrite(int pin, int value)
 
     close(fd);
     return(0);
-}
+}*/

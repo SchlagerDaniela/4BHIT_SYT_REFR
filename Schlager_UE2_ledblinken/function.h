@@ -3,7 +3,7 @@
  * Class: 4BHIT
  * Date: 06.12.2019
  */
-#include <stdio.h>
+/*#include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -24,10 +24,11 @@
 #define POUT1 17  //Pin 11
 
 static int GPIOExport(int pin);
-static int GPIOUnexport(int);
+static int GPIOUnexport(int pin);
 static int GPIODirection(int pin, int dir);
 static int GPIORead(int pin);
 static int GPIOWrite(int pin, int value);
 
 
 #endif //SCHLAGER_UE2_LEDBLINKEN_FUNCTION_H
+*/
