@@ -1,39 +1,4 @@
-/*#include <sys/stat.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
-#include "function.h"
-
-int main(int argc, char *argv[])
-{
-    int repeat = 10;
-
-    if (-1 == GPIOExport(POUT1) || -1 == GPIOExport(POUT))
-        return(1);
-
-
-    if (-1 == GPIODirection(POUT1, OUT) || -1 == GPIODirection(POUT, OUT))
-        return(2);
-
-    do {
-
-        if (-1 == GPIOWrite(POUT1, repeat % 2))
-            return(3);
-
-        printf("I'm reading %d in GPIO %d\n", GPIORead(POUT), POUT);
-
-        usleep(500 * 1000);
-    }
-    while (repeat--);
-
-    if (-1 == GPIOUnexport(POUT1) || -1 == GPIOUnexport(POUT))
-        return(4);
-
-    return(0);
-}*/
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -47,8 +12,8 @@ int main(int argc, char *argv[])
 #define LOW  0
 #define HIGH 1
 
-#define PIN  24 /* P1-18 */
-#define POUT 4  /* P1-07 */
+#define POUT1  4 /* Pin   */
+#define POUT 17  /* Pin 11 */
 
 static int
 GPIOExport(int pin)
@@ -67,6 +32,7 @@ GPIOExport(int pin)
     bytes_written = snprintf(buffer, BUFFER_MAX, "%d", pin);
     write(fd, buffer, bytes_written);
     close(fd);
+
     return(0);
 }
 
@@ -80,12 +46,14 @@ GPIOUnexport(int pin)
     fd = open("/sys/class/gpio/unexport", O_WRONLY);
     if (-1 == fd) {
         fprintf(stderr, "Failed to open unexport for writing!\n");
+
         return(-1);
     }
 
     bytes_written = snprintf(buffer, BUFFER_MAX, "%d", pin);
     write(fd, buffer, bytes_written);
     close(fd);
+
     return(0);
 }
 
@@ -111,6 +79,7 @@ GPIODirection(int pin, int dir)
     }
 
     close(fd);
+
     return(0);
 }
 
@@ -151,15 +120,18 @@ GPIOWrite(int pin, int value)
     fd = open(path, O_WRONLY);
     if (-1 == fd) {
         fprintf(stderr, "Failed to open gpio value for writing!\n");
+
         return(-1);
     }
 
     if (1 != write(fd, &s_values_str[LOW == value ? 0 : 1], 1)) {
         fprintf(stderr, "Failed to write value!\n");
+
         return(-1);
     }
 
     close(fd);
+
     return(0);
 }
 
@@ -171,26 +143,26 @@ main(int argc, char *argv[])
     /*
      * Enable GPIO pins
      */
-    if (-1 == GPIOExport(POUT) || -1 == GPIOExport(PIN))
+    if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
         return(1);
 
     /*
      * Set GPIO directions
      */
-    if (-1 == GPIODirection(POUT, OUT) || -1 == GPIODirection(PIN, IN))
+    if (-1 == GPIODirection(POUT, OUT) || -1 == GPIODirection(POUT1, OUT))
         return(2);
 
     do {
         /*
          * Write GPIO value
          */
-        if (-1 == GPIOWrite(POUT, repeat % 2))
+        if ((-1 == GPIOWrite(POUT, repeat % 2))&& -1 == GPIOWrite(POUT1, repeat % 2))
             return(3);
 
         /*
          * Read GPIO value
          */
-        printf("I'm reading %d in GPIO %d\n", GPIORead(PIN), PIN);
+        //printf("I'm reading %d in GPIO %d\n", GPIORead(POUT1), POUT1);
 
         usleep(500 * 1000);
     }
@@ -199,7 +171,7 @@ main(int argc, char *argv[])
     /*
      * Disable GPIO pins
      */
-    if (-1 == GPIOUnexport(POUT) || -1 == GPIOUnexport(PIN))
+    if (-1 == GPIOUnexport(POUT) || -1 == GPIOUnexport(POUT1))
         return(4);
 
     return(0);
