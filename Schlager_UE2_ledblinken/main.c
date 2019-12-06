@@ -11,25 +11,25 @@ int main(int argc, char *argv[])
 {
     int repeat = 10;
 
-    if (-1 == GPIOExport(POUT) || -1 == GPIOExport(PIN))
+    if (-1 == GPIOExport(POUT1) || -1 == GPIOExport(POUT))
         return(1);
 
 
-    if (-1 == GPIODirection(POUT, OUT) || -1 == GPIODirection(PIN, IN))
+    if (-1 == GPIODirection(POUT1, OUT) || -1 == GPIODirection(POUT, OUT))
         return(2);
 
     do {
 
-        if (-1 == GPIOWrite(POUT, repeat % 2))
+        if (-1 == GPIOWrite(POUT1, repeat % 2))
             return(3);
 
-        printf("I'm reading %d in GPIO %d\n", GPIORead(PIN), PIN);
+        printf("I'm reading %d in GPIO %d\n", GPIORead(POUT), POUT);
 
         usleep(500 * 1000);
     }
     while (repeat--);
 
-    if (-1 == GPIOUnexport(POUT) || -1 == GPIOUnexport(PIN))
+    if (-1 == GPIOUnexport(POUT1) || -1 == GPIOUnexport(POUT))
         return(4);
 
     return(0);

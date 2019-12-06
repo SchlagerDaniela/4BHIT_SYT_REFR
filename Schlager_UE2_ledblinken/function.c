@@ -1,6 +1,5 @@
 #include "function.h"
 
-
 static int GPIOExport(int pin)
 {
 #define BUFFER_MAX 3

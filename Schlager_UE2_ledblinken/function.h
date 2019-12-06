@@ -20,8 +20,8 @@
 #define LOW  0
 #define HIGH 1
 
-#define PIN  4 // Pin 07
-#define POUT 17  //Pin 11
+#define POUT  4 // Pin 07
+#define POUT1 17  //Pin 11
 
 static int GPIOExport(int pin);
 static int GPIOUnexport(int pin);
