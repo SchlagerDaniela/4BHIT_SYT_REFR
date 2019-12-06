@@ -23,7 +23,7 @@
 #define POUT  4 // Pin 07
 #define POUT1 17  //Pin 11
 
-static int GPIOExport(int pin);
+int GPIOExport(int pin);
 static int GPIOUnexport(int pin);
 static int GPIODirection(int pin, int dir);
 static int GPIORead(int pin);
