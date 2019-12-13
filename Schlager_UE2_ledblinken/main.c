@@ -19,8 +19,12 @@
 #define POUT1  4
 #define POUT 17
 
-static int GPIOExport(int pin) {
 #define BUFFER_MAX 3
+#define DIRECTION_MAX 35
+#define VALUE_MAX 30
+
+static int GPIOExport(int pin) {
+
     char buffer[BUFFER_MAX];
     ssize_t bytes_written;
     int fd;
@@ -31,7 +35,7 @@ static int GPIOExport(int pin) {
         return (-1);
     }
 
-    bytes_written = snprintf(buffer, BUFFER_MAX, "%d", pin);
+    bytes_written = sprintf(buffer, "%d", pin);
     write(fd, buffer, bytes_written);
     close(fd);
 
@@ -50,7 +54,7 @@ static int GPIOUnexport(int pin) {
         return (-1);
     }
 
-    bytes_written = snprintf(buffer, BUFFER_MAX, "%d", pin);
+    bytes_written = sprintf(buffer, "%d", pin);
     write(fd, buffer, bytes_written);
     close(fd);
 
@@ -60,11 +64,10 @@ static int GPIOUnexport(int pin) {
 static int GPIODirection(int pin, int dir) {
     static const char s_directions_str[] = "in\0out";
 
-#define DIRECTION_MAX 35
     char path[DIRECTION_MAX];
     int fd;
 
-    snprintf(path, DIRECTION_MAX, "/sys/class/gpio/gpio%d/direction", pin);
+    sprintf(path, "/sys/class/gpio/gpio%d/direction", pin);
     fd = open(path, O_WRONLY);
     if (-1 == fd) {
         fprintf(stderr, "Failed to open gpio direction for writing!\n");
@@ -82,12 +85,12 @@ static int GPIODirection(int pin, int dir) {
 }
 
 static int GPIORead(int pin) {
-#define VALUE_MAX 30
+
     char path[VALUE_MAX];
     char value_str[3];
     int fd;
 
-    snprintf(path, VALUE_MAX, "/sys/class/gpio/gpio%d/value", pin);
+    sprintf(path, "/sys/class/gpio/gpio%d/value", pin);
     fd = open(path, O_RDONLY);
     if (-1 == fd) {
         fprintf(stderr, "Failed to open gpio value for reading!\n");
@@ -110,7 +113,7 @@ static int GPIOWrite(int pin, int value) {
     char path[VALUE_MAX];
     int fd;
 
-    snprintf(path, VALUE_MAX, "/sys/class/gpio/gpio%d/value", pin);
+    sprintf(path, "/sys/class/gpio/gpio%d/value", pin);
     fd = open(path, O_WRONLY);
     if (-1 == fd) {
         fprintf(stderr, "Failed to open gpio value for writing!\n");
@@ -183,18 +186,6 @@ int ledBlinken() {
         usleep(25000);
         repeat++;
     }*/
-    /*
-    if ((-1 == GPIOWrite(POUT, HIGH)) && -1 == GPIOWrite(POUT1, HIGH)){
-        return (3);
-    }
-    usleep(25000);
-
-    if ((-1 == GPIOWrite(POUT, LOW)) && -1 == GPIOWrite(POUT1, LOW)){
-        return (4);
-    }
-    usleep(25000);
-}*/
-
 
     if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
         return (1);
@@ -202,18 +193,34 @@ int ledBlinken() {
     if (-1 == GPIODirection(POUT, OUT) || -1 == GPIODirection(POUT1, OUT))
         return (2);
 
-    int repeat = 0;
-    while(repeat<30000){
-        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) HIGH, POUT);
-        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const  char*) HIGH, POUT1);
+    while (repeat < 30000) {
+
+        if ((-1 == GPIOWrite(POUT, HIGH)) && -1 == GPIOWrite(POUT1, HIGH)) {
+            return (3);
+        }
         usleep(25000);
-        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) LOW, POUT);
-        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) LOW, POUT1);
+
+        if ((-1 == GPIOWrite(POUT, LOW)) && -1 == GPIOWrite(POUT1, LOW)) {
+            return (4);
+        }
         usleep(25000);
-        repeat++;
     }
 
+    /*if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
+        return (1);
+
+    if (-1 == GPIODirection(POUT, OUT) || -1 == GPIODirection(POUT1, OUT))
+        return (2);
+
+    while (repeat < 30000) {
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char *) HIGH, POUT);
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char *) HIGH, POUT1);
+        usleep(25000);
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char *) LOW, POUT);
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char *) LOW, POUT1);
+        usleep(25000);
+        repeat++;
+    }*/
+
     return 0;
-
-
 }
