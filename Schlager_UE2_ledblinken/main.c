@@ -163,7 +163,7 @@ main(int argc, char *argv[])
          * Read GPIO value
          */
 
-        printf("I'm reading %d in GPIO %d\n", GPIORead(POUT1), POUT1);
+       // printf("I'm reading %d in GPIO %d\n", GPIORead(POUT1), POUT1);
 
         usleep(500 * 1000);
     }
