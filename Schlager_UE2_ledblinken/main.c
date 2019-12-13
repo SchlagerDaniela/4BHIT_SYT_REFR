@@ -170,22 +170,38 @@ int main(int argc, char *argv[]) {
     return (0);
 }
 
+int repeat;
 int ledBlinken() {
-    if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
+
+    while(repeat <10000000){
+        if ((-1 == GPIOWrite(POUT, HIGH)) && -1 == GPIOWrite(POUT1, HIGH)){
+            return (3);
+        }
+        usleep(25000);
+
+        if ((-1 == GPIOWrite(POUT, LOW)) && -1 == GPIOWrite(POUT1, LOW)){
+            return (4);
+        }
+        usleep(25000);
+    }
+
+
+    /*if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
         return (1);
 
     if (-1 == GPIODirection(POUT, OUT) || -1 == GPIODirection(POUT1, OUT))
         return (2);
 
-    fprintf((FILE *) "echo %d > /sys/class/gpio%d/export", POUT, HIGH);
-    fprintf((FILE *) "echo in > /sys/class/gpio/gpio%d/direction", POUT);
-    fprintf((FILE *) "echo out > /sys/class/gpio/gpio%d/direction", POUT);
-    fprintf((FILE *) "cat /sys/class/gpio/gpio%d/value", POUT);
-    fprintf((FILE *) "echo 1 > /sys/class/gpio/gpio%d/value", POUT);
-    fprintf((FILE *) "echo %d > /sys/class/gpio%d/export", POUT1, HIGH);
-    usleep()
-    fprintf((FILE *) "echo %d > /sys/class/gpio%d/export", POUT, LOW);
-    fprintf((FILE *) "echo %d > /sys/class/gpio%d/export", POUT1, LOW);
+    int repeat = 0;
+    while(repeat<1000000){
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) HIGH, POUT);
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const  char*) HIGH, POUT1);
+        usleep(25000);
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) LOW, POUT);
+        fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) LOW, POUT1);
+        usleep(25000);
+        repeat++;
+    }*/
 
 
 }
