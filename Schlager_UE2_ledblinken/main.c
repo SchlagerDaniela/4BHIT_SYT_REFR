@@ -180,7 +180,8 @@ int ledBlinken() {
     fprintf((FILE *) "echo %d > /sys/class/gpio%d/export", POUT, HIGH);
     fprintf((FILE *) "echo in > /sys/class/gpio/gpio%d/direction", POUT);
     fprintf((FILE *) "echo out > /sys/class/gpio/gpio%d/direction", POUT);
-    fprintf((FILE *) "echo ")
+    fprintf((FILE *) "cat /sys/class/gpio/gpio%d/value", POUT);
+    fprintf((FILE *) "echo 1 > /sys/class/gpio/gpio%d/value", POUT);
     fprintf((FILE *) "echo %d > /sys/class/gpio%d/export", POUT1, HIGH);
     usleep()
     fprintf((FILE *) "echo %d > /sys/class/gpio%d/export", POUT, LOW);
