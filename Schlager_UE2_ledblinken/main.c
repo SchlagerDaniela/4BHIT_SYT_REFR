@@ -171,19 +171,28 @@ int main(int argc, char *argv[]) {
 }
 
 int repeat;
+
 int ledBlinken() {
 
-    while(repeat <10000000){
-        if ((-1 == GPIOWrite(POUT, HIGH)) && -1 == GPIOWrite(POUT1, HIGH)){
-            return (3);
-        }
+    while (repeat < 10000000) {
+        GPIOWrite(POUT, HIGH);
+        GPIOWrite(POUT1, HIGH);
         usleep(25000);
-
-        if ((-1 == GPIOWrite(POUT, LOW)) && -1 == GPIOWrite(POUT1, LOW)){
-            return (4);
-        }
+        GPIOWrite(POUT, LOW);
+        GPIOWrite(POUT1, LOW);
         usleep(25000);
     }
+    /*
+    if ((-1 == GPIOWrite(POUT, HIGH)) && -1 == GPIOWrite(POUT1, HIGH)){
+        return (3);
+    }
+    usleep(25000);
+
+    if ((-1 == GPIOWrite(POUT, LOW)) && -1 == GPIOWrite(POUT1, LOW)){
+        return (4);
+    }
+    usleep(25000);
+}*/
 
 
     /*if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
@@ -204,5 +213,6 @@ int ledBlinken() {
     }*/
 
     return 0;
+
 
 }
