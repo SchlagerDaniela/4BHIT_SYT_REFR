@@ -174,7 +174,9 @@ int repeat;
 
 int ledBlinken() {
 
-    while (repeat < 10000000) {
+
+
+    /*while (repeat < 30000) {
         GPIOWrite(POUT, HIGH);
         GPIOWrite(POUT1, HIGH);
         usleep(25000);
@@ -182,7 +184,7 @@ int ledBlinken() {
         GPIOWrite(POUT1, LOW);
         usleep(25000);
         repeat++;
-    }
+    }*/
     /*
     if ((-1 == GPIOWrite(POUT, HIGH)) && -1 == GPIOWrite(POUT1, HIGH)){
         return (3);
@@ -196,14 +198,14 @@ int ledBlinken() {
 }*/
 
 
-    /*if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
+    if (-1 == GPIOExport(POUT) || -1 == GPIOExport(POUT1))
         return (1);
 
     if (-1 == GPIODirection(POUT, OUT) || -1 == GPIODirection(POUT1, OUT))
         return (2);
 
     int repeat = 0;
-    while(repeat<1000000){
+    while(repeat<30000){
         fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) HIGH, POUT);
         fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const  char*) HIGH, POUT1);
         usleep(25000);
@@ -211,7 +213,7 @@ int ledBlinken() {
         fprintf((FILE *) "echo %d > /sys/class/gpio/gpio%d/value", (const char*) LOW, POUT1);
         usleep(25000);
         repeat++;
-    }*/
+    }
 
     return 0;
 
