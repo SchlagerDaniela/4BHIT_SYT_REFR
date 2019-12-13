@@ -181,6 +181,7 @@ int ledBlinken() {
         GPIOWrite(POUT, LOW);
         GPIOWrite(POUT1, LOW);
         usleep(25000);
+        repeat++;
     }
     /*
     if ((-1 == GPIOWrite(POUT, HIGH)) && -1 == GPIOWrite(POUT1, HIGH)){
